@@ -1,0 +1,8 @@
+# Termianl Virtual
+# Ignore all files in the terminal virtual directory
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.db
+.env
