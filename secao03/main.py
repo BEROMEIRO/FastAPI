@@ -1,8 +1,8 @@
 from typing import List, Optional
 
 from fastapi.responses import JSONResponse
-from fastapi import  Path, FastAPI, HTTPException, status, Query
-
+from fastapi import  Path, Query, Header
+from fastapi import FastAPI, HTTPException, status
 
 from models import Curso
 
@@ -31,7 +31,6 @@ async def get_msg():
 @app.get("/cursos")
 async def get_cursos():
     return cursos
-
 
 # Método com HttpException e status
 
@@ -71,7 +70,6 @@ async def put_curso(curso_id: int, curso: Curso):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail="Curso não existente")
-    
 
 # Método DELETE!
 @app.delete('/cursos/{curso_id}')
@@ -82,19 +80,24 @@ async def delete_curso(curso_id: int):
                             content={"msg": "Curso removido com sucesso"})
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            
                             detail=f"Não existe curso {curso_id} para ser removido")
-
-
+# Método GET com Query Parameters
 @app.get("/calculadora")
 async def calcular(
     a: int = Query(..., gt=0), 
-    b: int = Query(..., gt=0), 
+    b: int = Query(..., gt=0),
+    x_geek: Optional[str] = Header(None), 
     c: Optional[int] = Query(None, gt=5)
 ):
     soma: int = a + b
     if c:
         soma = soma + c
+    print(f"X-Geek: {x_geek}")
     return {"resultado": soma}
+
+
+
 
 if __name__ == "__main__":
     import uvicorn

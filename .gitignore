@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 *.db
 .env
+secao03/observacoes.txt
+observacoes.txt
