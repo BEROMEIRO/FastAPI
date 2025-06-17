@@ -52,19 +52,6 @@ async def get_curso(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail="Curso não encontrado")
     return curso
-    
-
-# Método sem HttpException e status (Não recomendado)
-# @app.get("/cursos/{curso_id}")
-# async def get_curso(curso_id: str):
-#     if not curso_id.isdigit():
-#         return {"Atenção": "Inserir dados do tipo INT(Número Inteiro)"}
-#     curso_id = int(curso_id)   
-#     curso = cursos.get(curso_id)
-#     if curso:
-#         curso.update({"id": curso_id})
-#         return curso
-#     return {"error": "Curso não encontrado"}
 
 # Método POST!
 @app.post("/cursos", status_code=status.HTTP_201_CREATED, response_model=Curso)
@@ -96,23 +83,14 @@ async def delete_curso(curso_id: int):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail=f"Não existe curso {curso_id} para ser removido")
-    
-# Meu método DELETE!
-# Neste caso o JSONResponse é usado para retornar uma resposta JSON personalizada.
-# De uma forma muito melhor que o Response,
-#  pois o Response não permite retornar um JSON personalizado.
-# @app.delete('/cursos/{curso_id}')
-# async def delete_curso(curso_id: int):
-#     if curso_id in cursos:
-#         del cursos[curso_id]
-#         return {"msg": "Curso removido com sucesso"}
-#     else:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
-#                             detail=f"Não existe curso {curso_id} para ser removido")
 
 
 @app.get("/calculadora")
-async def calcular(a: int, b: int, c: Optional[int] = None):
+async def calcular(
+    a: int = Query(..., gt=0), 
+    b: int = Query(..., gt=0), 
+    c: Optional[int] = Query(None, gt=5)
+):
     soma: int = a + b
     if c:
         soma = soma + c
