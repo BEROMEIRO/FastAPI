@@ -5,13 +5,15 @@ from routes import usuario_router
 from routes import home
 from routes import test
 
+
+
 app = FastAPI(
     title="API de Cursos",
     version="0.0.1",
     description="API para estudo de FastAPI",
     contact={
-        "name": "Gabriel Romeiro",
-        "email": "gabriel.romeiro@example.com"
+        "name": "Sarah Aciole",
+        "email": "sarah.aciole@example.com"
     }
 )
 app.include_router(home.router, tags=["Home"])

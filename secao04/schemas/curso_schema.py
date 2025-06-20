@@ -10,4 +10,5 @@ class CursoSchema(SCBaseModel):
 
     class Config:
         orm_mode = True
-        
+
+    
