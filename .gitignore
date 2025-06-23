@@ -8,5 +8,6 @@ __pycache__/
 .env
 secao03_p1/observacoes.txt
 secao04/observacoes.txt
+secao04/exemplo_visual.png
 
 observacoes.txt
