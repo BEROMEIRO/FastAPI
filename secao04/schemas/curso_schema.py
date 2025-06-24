@@ -3,12 +3,12 @@ from pydantic import BaseModel as SCBaseModel
 
 
 class CursoSchema(SCBaseModel):
-    id: Optional[int] # Opcional na criação, obrigatório na resposta
+    id: Optional[int] = None 
     titulo: str
     aulas: int
     horas: int
 
     class Config:
-        orm_mode = True # Permite pegar dados do Model (SQLAlchemy) direto
+        orm_mode = True 
 
     
