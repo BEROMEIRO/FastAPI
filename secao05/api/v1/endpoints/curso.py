@@ -15,25 +15,15 @@ Select.inherit_cache = True # type: ignore
 
 router = APIRouter()
 
-# POST CURSO
-@router.post(
-    "/",
-    response_model=CursoModel,
-    status_code=status.HTTP_201_CREATED,
-    tags=["cursos"]
-)
-async def post_curso(curso: CursoModel, db: AsyncSession = Depends(get_session)):
-    novo_curso = CursoModel(titulo=curso.titulo,aulas=curso.aulas, horas=curso.horas)
-    db.add(novo_curso)
-    await db.commit()
-    await db.refresh(novo_curso)
-    return novo_curso
 
 #GET CURSOS
 @router.get(
     "/",
     response_model=List[CursoModel],
     status_code=status.HTTP_200_OK,
+    description="Lista de cursos disponíveis",
+    summary="Listagem de cursos",
+    response_description="Lista de cursos retornada com sucesso",
     tags=["cursos"]
 )
 async def get_cursos(db: AsyncSession = Depends(get_session)):
@@ -48,6 +38,9 @@ async def get_cursos(db: AsyncSession = Depends(get_session)):
     "/{curso_id}",
     response_model=CursoModel,
     status_code=status.HTTP_200_OK,
+    description="Busca um curso pelo ID",
+    summary="Busca curso específico por ID",
+    response_description="Curso localizado com sucesso",
     tags=["cursos"]
 )
 async def get_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
@@ -60,10 +53,32 @@ async def get_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail="Curso não encontrado")
     
+
+# POST CURSO
+@router.post(
+    "/",
+    response_model=CursoModel,
+    status_code=status.HTTP_201_CREATED,
+    description="Cria um novo curso",
+    summary="Criação de curso",
+    response_description="Curso criado com sucesso",
+    tags=["cursos"]
+)
+async def post_curso(curso: CursoModel, db: AsyncSession = Depends(get_session)):
+    novo_curso = CursoModel(titulo=curso.titulo,aulas=curso.aulas, horas=curso.horas)
+    db.add(novo_curso)
+    await db.commit()
+    await db.refresh(novo_curso)
+    return novo_curso
+
+    
 #PUT CURSO
 @router.put("/{curso_id}", 
             status_code=status.HTTP_202_ACCEPTED,
             response_model=CursoModel,
+            description="Atualiza um curso existente",
+            summary="Atualização de curso",
+            response_description="Curso atualizado com sucesso",
             tags=["cursos"]
 )
 async def put_curso(
@@ -88,6 +103,8 @@ async def put_curso(
 #DELETE CURSO
 @router.delete("/{curso_id}",
                status_code=status.HTTP_204_NO_CONTENT,
+               description="Deleta um curso existente",
+               summary="Deleção de curso",response_description="Curso deletado com sucesso",
                tags=["cursos"]
 )
 async def delete_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
