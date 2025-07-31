@@ -18,5 +18,6 @@ def gerar_hash_senha(senha: str) -> str:
 
     :param senha: A senha a ser hasheada.
     :return: O hash da senha.
+    
     """
     return CRIPTO.hash(senha)
