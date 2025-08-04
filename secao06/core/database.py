@@ -5,6 +5,7 @@ from secao06.core.configs import settings
 
 engine: AsyncEngine = create_async_engine(settings.DB_URL)
 
+
 Session: AsyncSession = sessionmaker(
     bind=engine,
     class_=AsyncSession,
