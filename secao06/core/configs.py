@@ -19,8 +19,6 @@ class Settings(BaseSettings):
     ALGORITHM: str = 'HS256'
     # 60 minutos * 24 horas * 7 dias => 1 semana
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
-
-
     class Config:
         case_sensitive = True
 settings: Settings = Settings()
