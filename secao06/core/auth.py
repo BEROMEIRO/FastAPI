@@ -53,6 +53,8 @@ def _criar_token(tipo_token: str, tempo_vida: timedelta, sub: str) -> str:
     """
     payload = {}
     sp = timezone(settings.TIMEZONE)
+
+    
     expira = datetime.now(tz=sp) + tempo_vida
     
     payload["type"] = tipo_token
